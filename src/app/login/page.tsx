@@ -1,8 +1,6 @@
-// app/login/page.tsx
-
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation'; // Import useRouter for page navigation
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/AuthProvider';
 
 export default function LoginPage() {
@@ -10,7 +8,9 @@ export default function LoginPage() {
   const [form, setForm] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter(); // Initialize the router
+ // const router = useRouter(); // Initialize the router
+ const { push } = useRouter();
+
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -23,7 +23,9 @@ export default function LoginPage() {
     try {
       await login(form.username, form.password);
       // Navigate to the dashboard after successful login
-      router.push('/dashboard'); // This will redirect the user to the dashboard
+      console.log("It comes back here");
+      push('/dashboard'); // This will redirect the user to the dashboard
+      console.log("Redirecting to /dashboard");
     } catch (err: any) {
       setError(err.message);
     } finally {

@@ -1,6 +1,7 @@
-'use client';
-import { createContext, useContext, useState, ReactNode } from 'react';
-import { useRouter } from 'next/navigation';
+"use client";
+import { createContext, useContext, useState, ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { NextResponse } from 'next/server';
 
 const AuthContext = createContext<any>(null);
 
@@ -9,17 +10,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
 
   const login = async (username: string, password: string) => {
-    if (username === 'admin' && password === 'password') {
-      setUser({ name: 'admin' });
-      router.push('/dashboard');
-    } else {
-      throw new Error('Invalid credentials');
-    }
-  };
+  const res = await fetch('/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, password }),
+  });
+
+  if (!res.ok) {
+    const data = await res.json();
+    throw new Error(data.message || 'Login failed');
+  }
+
+  setUser({ username }); // Optional: track user state
+};
+
 
   const logout = () => {
     setUser(null);
-    router.push('/login');
+    router.push("/login");
   };
 
   return (
