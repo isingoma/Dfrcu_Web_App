@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { NextResponse } from 'next/server';
+
 
 const AuthContext = createContext<any>(null);
 
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     throw new Error(data.message || 'Login failed');
   }
 
-  setUser({ username }); // Optional: track user state
+  setUser({ username }); 
 };
 
 

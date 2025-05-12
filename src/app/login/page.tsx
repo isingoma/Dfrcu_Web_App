@@ -1,31 +1,26 @@
-'use client';
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useAuth } from '@/components/AuthProvider';
+"use client";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/AuthProvider";
 
 export default function LoginPage() {
   const { login } = useAuth();
-  const [form, setForm] = useState({ username: '', password: '' });
-  const [error, setError] = useState('');
+  const [form, setForm] = useState({ username: "", password: "" });
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
- // const router = useRouter(); // Initialize the router
- const { push } = useRouter();
-
+  const { push } = useRouter();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (!form.username || !form.password) {
-      setError('Both fields are required.');
+      setError("Both fields are required.");
       return;
     }
 
     setLoading(true);
     try {
       await login(form.username, form.password);
-      // Navigate to the dashboard after successful login
-      console.log("It comes back here");
-      push('/dashboard'); // This will redirect the user to the dashboard
-      console.log("Redirecting to /dashboard");
+      push("/dashboard");
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -80,11 +75,13 @@ export default function LoginPage() {
         <button
           type="submit"
           className={`w-full p-3 text-white font-semibold rounded-lg transition-colors ${
-            loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
+            loading
+              ? "bg-gray-400 cursor-not-allowed"
+              : "bg-blue-600 hover:bg-blue-700"
           }`}
           disabled={loading}
         >
-          {loading ? 'Logging In...' : 'Log In'}
+          {loading ? "Logging In..." : "Log In"}
         </button>
       </form>
     </div>
