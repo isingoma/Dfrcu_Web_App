@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api/payments', // adjust to your C# API URL
+  baseURL: 'https://localhost:7154/api/payments', // adjust to your C# API URL
   headers: { 'Content-Type': 'application/json' },
 });
 
